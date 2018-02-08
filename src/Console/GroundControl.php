@@ -53,8 +53,11 @@ class GroundControl extends Command
 
         try {
             $this->validateDimensions($dimensions);
-        } catch (InputException $e)
-        {
+            $this->validateSpiritSp($spiritSp);
+            $this->validateSpiritInstructions($spiritInstructions);
+            $this->validateOpportunitySp($opportunitySp);
+            $this->validateInstructions($opportunityInstructions);
+        } catch (InputException $e) {
             $output->writeln("<error>{$e->getMessage()}</error>");
 
             return true;
@@ -69,6 +72,7 @@ class GroundControl extends Command
     /**
      * Throws exception if this are not valid dimensions
      * @param $dimensions
+     * @return bool
      * @throws InputException
      */
     private function validateDimensions($dimensions)
@@ -76,5 +80,40 @@ class GroundControl extends Command
         if (!is_array($dimensions)) {
             throw new InputException(sprintf(self::ERROR_ARG_DIMENSIONS, $dimensions));
         }
+
+        return true;
+    }
+
+    /**
+     * @todo
+     */
+    private function validateSpiritSp($spiritSp)
+    {
+        return true;
+    }
+
+
+    /**
+     * @todo
+     * */
+    private function validateSpiritInstructions($spiritInstructions)
+    {
+        return true;
+    }
+
+    /**
+     * @todo
+     */
+    private function validateOpportunitySp($opportunitySp)
+    {
+        return true;
+    }
+
+    /**
+     * @todo
+     */
+    private function validateInstructions($opportunityInstructions)
+    {
+        return true;
     }
 }

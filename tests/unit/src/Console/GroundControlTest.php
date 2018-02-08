@@ -36,8 +36,6 @@ class GroundControlTest extends TestCase
         $this->assertContains('Dimensions [some wrong dimensions] are not valid', $response);
     }
 
-
-
     /**
      * Valid instructions for testing
      * @return array
