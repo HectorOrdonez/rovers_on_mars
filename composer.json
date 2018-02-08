@@ -1,0 +1,15 @@
+{
+    "name": "dev/werkspot",
+    "require": {
+        "symfony/console": "^4.0",
+        "phpunit/phpunit": "^7.0",
+        "mockery/mockery": "^1.0",
+        "phpmetrics/phpmetrics": "^2.3"
+    },
+    "authors": [
+        {
+            "name": "HectorOrdonez",
+            "email": "hjavierog@gmail.com"
+        }
+    ]
+}
