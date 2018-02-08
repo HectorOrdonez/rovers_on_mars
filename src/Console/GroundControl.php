@@ -2,6 +2,7 @@
 namespace App\Console;
 
 use App\Console\Exception\InputException;
+use App\Land\Plateau;
 use App\Movement\MovementControl;
 use App\Vehicle\Rover;
 use Symfony\Component\Console\Command\Command;
@@ -66,9 +67,10 @@ class GroundControl extends Command
             return true;
         }
 
+        $plateau = new Plateau($dimensions[0], $dimensions[1]);
         $movementControl = new MovementControl();
-        $spirit = new Rover($spiritSp[0], $spiritSp[1], $spiritSp[2]);
-        $opportunity = new Rover($opportunitySp[0], $opportunitySp[1], $opportunitySp[2]);
+        $spirit = new Rover($spiritSp[0], $spiritSp[1], $spiritSp[2], $plateau);
+        $opportunity = new Rover($opportunitySp[0], $opportunitySp[1], $opportunitySp[2], $plateau);
 
         $movementControl->runInstructions($spirit, $spiritInstructions);
         $movementControl->runInstructions($opportunity, $opportunityInstructions);

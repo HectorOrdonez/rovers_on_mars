@@ -25,7 +25,7 @@ class GroundControlTest extends TestCase
     public function testDimensionsHaveToBeAValidString()
     {
         $input = $this->getValidInput();
-        $input['dimensions'] = 'some wrong dimensions';
+        $input['dimensions'] = '-1 5';
 
         $groundControl = new GroundControl();
         $commandTester = new CommandTester($groundControl);
@@ -33,7 +33,7 @@ class GroundControlTest extends TestCase
         $commandTester->execute($input);
         $response = $commandTester->getDisplay();
 
-        $this->assertContains('Dimensions [some wrong dimensions] are not valid', $response);
+        $this->assertContains('Dimensions [-1 5] are not valid', $response);
     }
 
     /**
