@@ -31,3 +31,10 @@ Rovers cannot appear outside the Plateau. Since we know the dimensions of it whe
 2nd Part: structure.
 I am going to start writing the overall structure of the application as I see it. Code will not work and it will mostly be dummy stuff, but it will help me get started.
 
+I definitely have some doubts regarding some decisions I am taking. But I am against the clock so I decided I am going for the "easy" solution and if I have time later, I will refactor.
+
+End of second part. Ugh, got into some problems with php 7.1. I had 7.0 installed in my local and vagrant was not making my life easier. Went for the quickfix and installed 7.1 in local with homebrew.
+
+Couldn't finish the structural mock up so I am behind. In the next pomodoro I will try to have the structure finished, tests running at least in a empty state.
+
+I should as well have the console command working with the expected input.

@@ -1,2 +1,2 @@
 <?php
-// The console command object
+class GroundControl extends Command

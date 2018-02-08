@@ -1,9 +1,12 @@
 <?php
-// MovementManager
-// -> validateInstruction
-// -> runInstruction
-//    -> foreach instruction $this->goForward($rover) ? Looks good
+namespace App\Test\Unit\Src\MovementControl;
 
-// GoForward
-// TurnLeft
-// TurnRight
+use App\Test\Unit\TestCase;
+
+class Movement extends TestCase
+{
+    public function testSomething()
+    {
+        $this->assertTrue(true);
+    }
+}
