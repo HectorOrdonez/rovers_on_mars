@@ -2,6 +2,7 @@
 namespace App\Console;
 
 use App\Console\Exception\InputException;
+use App\Movement\MovementControl;
 use App\Vehicle\Rover;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -56,7 +57,7 @@ class GroundControl extends Command
         try {
             $plateauDimensions = $this->parseDimensions($dimensions);
             $spiritSp = $this->parseRoverSp($spiritSp);
-            $spiritInstructions = $this->validateSpiritInstructions($spiritInstructions);
+            $spiritInstructions = $this->validateInstructions($spiritInstructions);
             $opportunitySp = $this->parseRoverSp($opportunitySp);
             $opportunityInstructions = $this->validateInstructions($opportunityInstructions);
         } catch (InputException $e) {
@@ -65,8 +66,12 @@ class GroundControl extends Command
             return true;
         }
 
+        $movementControl = new MovementControl();
         $spirit = new Rover($spiritSp[0], $spiritSp[1], $spiritSp[2]);
         $opportunity = new Rover($opportunitySp[0], $opportunitySp[1], $opportunitySp[2]);
+
+        $movementControl->runInstructions($spirit, $spiritInstructions);
+        $movementControl->runInstructions($opportunity, $opportunityInstructions);
 
         $output->writeln(implode(' ', $spirit->getPosition()));
         $output->writeln(implode(' ', $opportunity->getPosition()));
@@ -83,19 +88,17 @@ class GroundControl extends Command
     private function parseDimensions($dimensions)
     {
         $dimensions = explode(' ', $dimensions);
-        $x = $dimensions[0];
-        $y = $dimensions[1];
+        $x = (int) $dimensions[0];
+        $y = (int) $dimensions[1];
 
         if (
-            !is_int($x) ||
-            !is_int(($y)) ||
             $x < 0 ||
             $y < 0
         ) {
             throw new InputException(sprintf(self::ERROR_ARG_DIMENSIONS, implode(' ', $dimensions)));
         }
 
-        return true;
+        return [$x, $y];
     }
 
     /**
@@ -104,13 +107,11 @@ class GroundControl extends Command
     private function parseRoverSp($roverSp)
     {
         $startingPos = explode(' ', $roverSp);
-        $x = $startingPos[0];
-        $y = $startingPos[1];
+        $x = (int) $startingPos[0];
+        $y = (int) $startingPos[1];
         $orientation = strtolower($startingPos[2]);
 
         if (
-            !is_int($x) ||
-            !is_int(($y)) ||
             $x < 0 ||
             $y < 0
         ) {
@@ -120,28 +121,11 @@ class GroundControl extends Command
         return [$x, $y, $orientation];
     }
 
-
-    /**
-     * @todo
-     * */
-    private function validateSpiritInstructions($spiritInstructions)
-    {
-        return true;
-    }
-
     /**
      * @todo
      */
-    private function validateOpportunitySp($opportunitySp)
+    private function validateInstructions($instructions)
     {
-        return true;
-    }
-
-    /**
-     * @todo
-     */
-    private function validateInstructions($opportunityInstructions)
-    {
-        return true;
+        return $instructions;
     }
 }
