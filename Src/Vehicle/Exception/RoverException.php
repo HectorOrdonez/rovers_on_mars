@@ -1,5 +1,5 @@
 <?php
-namespace App\Console\Exception;
+namespace App\Vehicle\Exception;
 
 class RoverException extends \Exception
 {

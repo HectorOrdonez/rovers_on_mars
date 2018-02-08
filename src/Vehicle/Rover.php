@@ -1,7 +1,7 @@
 <?php
 namespace App\Vehicle;
 
-use App\Console\Exception\RoverException;
+use App\Vehicle\Exception\RoverException;
 
 /**
  * Class Rover
@@ -75,7 +75,7 @@ class Rover {
 
         if(!in_array($orientation, $validOrientations))
         {
-            throw new RoverException(self::ERROR_ORIENTATION);
+            throw new RoverException(sprintf(self::ERROR_ORIENTATION, $orientation));
         }
 
         return true;

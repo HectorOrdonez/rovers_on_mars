@@ -38,3 +38,6 @@ End of second part. Ugh, got into some problems with php 7.1. I had 7.0 installe
 Couldn't finish the structural mock up so I am behind. In the next pomodoro I will try to have the structure finished, tests running at least in a empty state.
 
 I should as well have the console command working with the expected input.
+
+
+php app.php run "5 5" "1 1 N" "LMLML" "3 3 E" "MMRMRM"

@@ -2,6 +2,7 @@
 namespace App\Console;
 
 use App\Console\Exception\InputException;
+use App\Vehicle\Rover;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -16,6 +17,7 @@ class GroundControl extends Command
     const ARG_OPPORTUNITY_INST = 'opportunity instructions';
 
     const ERROR_ARG_DIMENSIONS = 'Dimensions [%s] are not valid';
+    const ERROR_ARG_ROVER = 'Rover starting point [%s] are not valid';
 
     /**
      * Configure this command
@@ -52,19 +54,22 @@ class GroundControl extends Command
         $opportunityInstructions = $input->getArgument(self::ARG_OPPORTUNITY_INST);
 
         try {
-            $this->validateDimensions($dimensions);
-            $this->validateSpiritSp($spiritSp);
-            $this->validateSpiritInstructions($spiritInstructions);
-            $this->validateOpportunitySp($opportunitySp);
-            $this->validateInstructions($opportunityInstructions);
+            $plateauDimensions = $this->parseDimensions($dimensions);
+            $spiritSp = $this->parseRoverSp($spiritSp);
+            $spiritInstructions = $this->validateSpiritInstructions($spiritInstructions);
+            $opportunitySp = $this->parseRoverSp($opportunitySp);
+            $opportunityInstructions = $this->validateInstructions($opportunityInstructions);
         } catch (InputException $e) {
             $output->writeln("<error>{$e->getMessage()}</error>");
 
             return true;
         }
 
-        $output->writeln("Output here");
+        $spirit = new Rover($spiritSp[0], $spiritSp[1], $spiritSp[2]);
+        $opportunity = new Rover($opportunitySp[0], $opportunitySp[1], $opportunitySp[2]);
 
+        $output->writeln(implode(' ', $spirit->getPosition()));
+        $output->writeln(implode(' ', $opportunity->getPosition()));
 
         return true;
     }
@@ -75,9 +80,18 @@ class GroundControl extends Command
      * @return bool
      * @throws InputException
      */
-    private function validateDimensions($dimensions)
+    private function parseDimensions($dimensions)
     {
-        if (!is_array($dimensions)) {
+        $dimensions = explode(' ', $dimensions);
+        $x = (int) $dimensions[0];
+        $y = (int) $dimensions[1];
+
+        if (
+            !is_int($x) ||
+            !is_int(($y)) ||
+            $x < 0 ||
+            $y < 0
+        ) {
             throw new InputException(sprintf(self::ERROR_ARG_DIMENSIONS, $dimensions));
         }
 
@@ -87,9 +101,23 @@ class GroundControl extends Command
     /**
      * @todo
      */
-    private function validateSpiritSp($spiritSp)
+    private function parseRoverSp($roverSp)
     {
-        return true;
+        $startingPos = explode(' ', $roverSp);
+        $x = (int) $startingPos[0];
+        $y = (int) $startingPos[1];
+        $orientation = strtolower($startingPos[2]);
+
+        if (
+            !is_int($x) ||
+            !is_int(($y)) ||
+            $x < 0 ||
+            $y < 0
+        ) {
+            throw new InputException(sprintf(self::ERROR_ARG_ROVER, $roverSp));
+        }
+
+        return [$x, $y, $orientation];
     }
 
 
