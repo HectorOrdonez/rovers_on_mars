@@ -146,4 +146,26 @@ class RoverTest extends TestCase
         $this->assertEquals(Rover::ORIENTATION_W, $rover->getPosition()[2]);
     }
 
+    public function testRoverAdvancedMovementTest1()
+    {
+        $x = 10;
+        $y = 10;
+        $orientation = Rover::ORIENTATION_N;
+
+        $rover = new Rover($x, $y, $orientation);
+        $rover->turnLeft();
+        $rover->moveForward(); // West, X - (9)
+        $rover->turnLeft(); // South
+        $rover->moveForward(); // South, Y - (9)
+        $rover->turnLeft();  // East
+        $rover->moveForward(); // East, X + (10)
+        $rover->moveForward(); // East, X + (11)
+        $rover->moveForward(); // East, X + (12)
+        $rover->turnRight(); // North
+        $rover->turnRight(); // West
+
+        $this->assertEquals(12, $rover->getPosition()[0]);
+        $this->assertEquals(9, $rover->getPosition()[1]);
+        $this->assertEquals(Rover::ORIENTATION_W, $rover->getPosition()[2]);
+    }
 }
