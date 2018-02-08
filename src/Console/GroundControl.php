@@ -83,8 +83,8 @@ class GroundControl extends Command
     private function parseDimensions($dimensions)
     {
         $dimensions = explode(' ', $dimensions);
-        $x = (int) $dimensions[0];
-        $y = (int) $dimensions[1];
+        $x = $dimensions[0];
+        $y = $dimensions[1];
 
         if (
             !is_int($x) ||
@@ -92,7 +92,7 @@ class GroundControl extends Command
             $x < 0 ||
             $y < 0
         ) {
-            throw new InputException(sprintf(self::ERROR_ARG_DIMENSIONS, $dimensions));
+            throw new InputException(sprintf(self::ERROR_ARG_DIMENSIONS, implode(' ', $dimensions)));
         }
 
         return true;
@@ -104,8 +104,8 @@ class GroundControl extends Command
     private function parseRoverSp($roverSp)
     {
         $startingPos = explode(' ', $roverSp);
-        $x = (int) $startingPos[0];
-        $y = (int) $startingPos[1];
+        $x = $startingPos[0];
+        $y = $startingPos[1];
         $orientation = strtolower($startingPos[2]);
 
         if (
